@@ -1,25 +1,27 @@
-/*      
-*  IR read codes     
-*  by Hanie kiani     
-*  https://electropeak.com/learn/        
-*/     
-#include <IRremote.h>   
-int RECV_PIN = 7
-IRrecv irrecv(RECV_PIN);     
-decode_results results;     
-void setup()     
-{     
-Serial.begin(9600);     
-irrecv.enableIRIn();     
-{     
-void loop()     
-{     
-if (irrecv.decode(&results))// Returns 0 if no data ready, 1 if data ready.     
-{     
- int results.value = results;// Results of decoding are stored in result.value     
- Serial.println(" ");     
- Serial.print("Code: ");     
- Serial.println(results.value); //prints the value a a button press     
- Serial.println(" ");     
- irrecv.resume(); // Restart the ISR state machine and Receive the next value     
-}     
+IRrecvPCI myReceiver(2);
+
+void setup() {
+  Serial.begin(9600);
+  delay(2000); while (!Serial); 
+  myReceiver.enableIRIn(); 
+  Serial.println(F("Ready to receive IR signals"));
+  myReceiver.setFrameTimeout(100000);
+}
+
+void loop() {
+  //Continue looping until you get a complete signal received
+  if (myReceiver.getResults()) { 
+    Serial.println(F("Do a cut-and-paste of the following lines into the "));
+    Serial.println(F("designated location in rawSend.ino"));
+    Serial.print(F("\n#define RAW_DATA_LEN "));
+    Serial.println(recvGlobal.recvLength,DEC);
+    Serial.print(F("uint16_t rawData[RAW_DATA_LEN]={\n\t"));
+    for(bufIndex_t i=1;i<recvGlobal.recvLength;i++) {
+      Serial.print(recvGlobal.recvBuffer[i],DEC);
+      Serial.print(F(", "));
+      if( (i % 8)==0) Serial.print(F("\n\t"));
+    }
+    Serial.println(F("1000};"));//Add arbitrary trailing space
+    myReceiver.enableIRIn();      //Restart receiver
+  }
+}
