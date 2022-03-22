@@ -7,4 +7,5 @@ Welcome to the Group1's physics STEM challenge repository for our smart home aut
 Thank you!
 
 Best, 
+
   Denzel, Sarah, Chloe, Aaron
