@@ -1,0 +1,45 @@
+#include <IRLibSendBase.h>   
+#include <IRLib_HashRaw.h>    
+#include <Adafruit_BMP280.h>
+
+#Adafruit_BMP280 bmp; // I2C Interface
+
+IRsendRaw mySender;
+
+void setup() {
+  Serial.begin(9600);
+  delay(2000); 
+  Serial.println(F("BMP280"));
+
+  if (!bmp.begin()) {
+    Serial.println(F("BMP280 sensor not found!"));
+    while (1);
+  }
+
+#define RAW_DATA_LEN 350
+uint16_t rawDataOff[RAW_DATA_LEN]={
+;
+
+#define RAW_DATA_LEN 350
+uint16_t rawDataOn[RAW_DATA_LEN]={
+};
+
+/* Paste IR signals for reference
+ */ 
+
+   
+void loop() {
+
+    Serial.print(F("Temperature = "));
+    Serial.print(bmp.readTemperature());
+    Serial.println(" *C");
+  if (temp > 28) {
+    mySender.send(rawDataOn,RAW_DATA_LEN,36);//Pass the buffer,length, optionally frequency
+    Serial.println(F("AC Switched On"));
+  }
+  else if (temp < 20) {
+    mySender.send(rawDataOff,RAW_DATA_LEN,36);//Pass the buffer,length, optionally frequency
+    Serial.println(F("AC Switched Off"));
+  }
+  delay(5000);
+}
