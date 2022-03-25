@@ -1,10 +1,5 @@
 # Arduino-IR-Automation
 
-Hello judges!
+All previous revisions of schematics can be viewed in this branch. 
 
-Welcome to the Group1's physics STEM challenge repository for our smart home automation with arduino through IR communication. Here, you can find all available materials including our schematics and any CPP code used with our arduino uno. 
-
-Thank you!
-
-Best, 
-Denzel, Sarah, Chloe, Aaron
+Latest verion (1.6)
